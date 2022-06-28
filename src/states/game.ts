@@ -10,6 +10,14 @@ export class Game extends Phaser.State {
 
   private text: Phaser.BitmapText;
 
+  private blueScore : Phaser.Text;
+
+  private redScore : Phaser.Text;
+
+  private redPoints : number = 0;
+
+  private bluePoints : number = 0;
+
   private spaceKey: Phaser.Key;
 
   private area: HockeyArea;
@@ -24,6 +32,11 @@ export class Game extends Phaser.State {
 
   private goalAreaDown : GoalArea;
 
+  private keyW : Phaser.Key
+  private keyA : Phaser.Key
+  private keyS : Phaser.Key
+  private keyD : Phaser.Key
+
   public create(): void {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -32,6 +45,14 @@ export class Game extends Phaser.State {
 
     this.area = new HockeyArea(this.state.getCurrentState().game, 0, 0);
     this.game.add.existing(this.area);
+
+    this.redScore = this.add.text(100, 100, `Red Score: ${this.redPoints}`);
+    this.game.add.existing(this.redScore);
+    this.redScore.addColor("#ff0000", 0);
+
+    this.blueScore = this.add.text(900, 1700, `Blue Score: ${this.bluePoints}`);
+    this.game.add.existing(this.blueScore);
+    this.blueScore.addColor("#0000ff", 0);
 
     this.hockeyPuck = new HockeyPuck(this.game, this.game.world.centerX, this.game.world.centerY);
     this.game.add.existing(this.hockeyPuck);
@@ -54,6 +75,12 @@ export class Game extends Phaser.State {
     this.spaceKey.onDown.add(() => {
       Sound.play();
     }, this);
+
+    this.keyA = this.input.keyboard.addKey(Phaser.Keyboard.A);
+    this.keyS = this.input.keyboard.addKey(Phaser.Keyboard.S);
+    this.keyD = this.input.keyboard.addKey(Phaser.Keyboard.D);
+    this.keyW = this.input.keyboard.addKey(Phaser.Keyboard.W);
+
   }
 
   padSpeed = 350;
@@ -61,6 +88,7 @@ export class Game extends Phaser.State {
   public update(): void {
     this.game.input.update();
     this.hockeyPadBlue.body.velocity.setTo(0, 0);
+    this.hockeyPadRed.body.velocity.setTo(0, 0);
 
     if (this.cursors.down.isDown) {
       this.hockeyPadBlue.body.velocity.y = this.padSpeed;
@@ -74,14 +102,36 @@ export class Game extends Phaser.State {
     if (this.cursors.right.isDown) {
       this.hockeyPadBlue.body.velocity.x = this.padSpeed;
     }
+    if (this.keyS.isDown) {
+      this.hockeyPadRed.body.velocity.y = this.padSpeed;
+    }
+    if (this.keyW.isDown) {
+      this.hockeyPadRed.body.velocity.y = -this.padSpeed;
+    }
+    if (this.keyA.isDown) {
+      this.hockeyPadRed.body.velocity.x = -this.padSpeed;
+    }
+    if (this.keyD.isDown) {
+      this.hockeyPadRed.body.velocity.x = this.padSpeed;
+    }
+
+
     this.physics.arcade.collide(this.hockeyPadBlue, this.hockeyPuck, this.collisionCallback.bind(this));
+    this.physics.arcade.collide(this.hockeyPadRed, this.hockeyPuck, this.collisionCallback.bind(this));
+    this.physics.arcade.collide(this.hockeyPadRed, this.hockeyPadBlue);
+
     if (this.physics.arcade.overlap(this.hockeyPuck, this.goalAreaUp)) {
       console.log('GOAL UPPER');
       this.resetHockeyPuck();
+      this.bluePoints++;
+      this.blueScore.setText(`Blue Score: ${this.bluePoints}`);
+
     }
     if (this.physics.arcade.overlap(this.hockeyPuck, this.goalAreaDown)) {
       console.log('GOAL DOWN');
       this.resetHockeyPuck();
+      this.redPoints++;
+      this.redScore.setText(`Red Score: ${this.redPoints}`);
     }
   }
 
@@ -100,6 +150,7 @@ export class Game extends Phaser.State {
   public render(): void {
     this.game.debug.body(this.hockeyPuck);
     this.game.debug.body(this.hockeyPadBlue);
+    this.game.debug.body(this.hockeyPadRed);
     this.game.debug.body(this.goalAreaUp);
   }
 }

@@ -13,6 +13,7 @@ export class Preload extends Phaser.State {
     this.game.load.image('ice-hockey', 'assets/sprites/ice-hockey.png');
     this.game.load.image('ice-hockey-puck', 'assets/sprites/ice-hockey-puck.png');
     this.game.load.image('hockey-pad-blue', 'assets/sprites/hockey-pad-blue.png');
+    this.game.load.image('hockey-pad-red', 'assets/sprites/hockey-pad-red.png');
     this.game.load.image('goal-field', 'assets/sprites/goal-field.png');
 
     // Initialize Howler
