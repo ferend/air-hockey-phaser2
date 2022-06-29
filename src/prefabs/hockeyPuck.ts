@@ -9,7 +9,9 @@ export class HockeyPuck extends Phaser.Sprite {
     const radius = this.width * 4;
     this.body.setCircle(
       radius,
+      // eslint-disable-next-line no-mixed-operators
       (-radius + 0.5 * this.width / this.scale.x),
+      // eslint-disable-next-line no-mixed-operators
       (-radius + 0.5 * this.height / this.scale.y),
     );
     this.body.bounce.set(1);

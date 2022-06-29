@@ -10,9 +10,11 @@ export class HockeyPad extends Phaser.Sprite {
     const radius = this.width;
     this.body.setCircle(
       radius,
+      // eslint-disable-next-line no-mixed-operators
       (-radius + 0.5 * this.width / this.scale.x),
+      // eslint-disable-next-line no-mixed-operators
       (-radius + 0.5 * this.height / this.scale.y),
-      );
+    );
     this.body.collideWorldBounds = true;
   }
 }

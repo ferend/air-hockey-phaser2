@@ -1,5 +1,4 @@
 import Phaser from 'phaser-ce';
-import { Sound } from '../helpers/sound';
 import { HockeyArea } from '../prefabs/hockeyArea';
 import { HockeyPad } from '../prefabs/hockeyPad';
 import { HockeyPuck } from '../prefabs/hockeyPuck';
@@ -33,8 +32,11 @@ export class Game extends Phaser.State {
   private goalAreaDown : GoalArea;
 
   private keyW : Phaser.Key
+
   private keyA : Phaser.Key
+
   private keyS : Phaser.Key
+
   private keyD : Phaser.Key
 
   public create(): void {
@@ -48,11 +50,11 @@ export class Game extends Phaser.State {
 
     this.redScore = this.add.text(100, 100, `Red Score: ${this.redPoints}`);
     this.game.add.existing(this.redScore);
-    this.redScore.addColor("#ff0000", 0);
+    this.redScore.addColor('#ff0000', 0);
 
     this.blueScore = this.add.text(900, 1700, `Blue Score: ${this.bluePoints}`);
     this.game.add.existing(this.blueScore);
-    this.blueScore.addColor("#0000ff", 0);
+    this.blueScore.addColor('#0000ff', 0);
 
     this.hockeyPuck = new HockeyPuck(this.game, this.game.world.centerX, this.game.world.centerY);
     this.game.add.existing(this.hockeyPuck);
@@ -71,16 +73,15 @@ export class Game extends Phaser.State {
     this.goalAreaDown = new GoalArea(this.state.getCurrentState().game, 300, 1800);
     this.game.add.existing(this.goalAreaDown);
 
-    this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    this.spaceKey.onDown.add(() => {
-      Sound.play();
-    }, this);
+    // this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    // this.spaceKey.onDown.add(() => {
+    //   Sound.play();
+    // }, this);
 
     this.keyA = this.input.keyboard.addKey(Phaser.Keyboard.A);
     this.keyS = this.input.keyboard.addKey(Phaser.Keyboard.S);
     this.keyD = this.input.keyboard.addKey(Phaser.Keyboard.D);
     this.keyW = this.input.keyboard.addKey(Phaser.Keyboard.W);
-
   }
 
   padSpeed = 350;
@@ -125,19 +126,20 @@ export class Game extends Phaser.State {
       this.resetHockeyPuck();
       this.bluePoints++;
       this.blueScore.setText(`Blue Score: ${this.bluePoints}`);
-
+      this.resetHockeyPad();
     }
     if (this.physics.arcade.overlap(this.hockeyPuck, this.goalAreaDown)) {
       console.log('GOAL DOWN');
       this.resetHockeyPuck();
       this.redPoints++;
       this.redScore.setText(`Red Score: ${this.redPoints}`);
+      this.resetHockeyPad();
     }
   }
 
   public collisionCallback(): void {
-     this.hockeyPuck.body.velocity.y -= 40;
-     this.hockeyPuck.body.velocity.x -= 40;
+    this.hockeyPuck.body.velocity.y -= 40;
+    this.hockeyPuck.body.velocity.x -= 40;
   }
 
   public resetHockeyPuck() : void {
@@ -145,6 +147,11 @@ export class Game extends Phaser.State {
     this.hockeyPuck.position.y = 960;
     this.hockeyPuck.body.velocity.y = 0;
     this.hockeyPuck.body.velocity.x = 0;
+  }
+
+  public resetHockeyPad() : void {
+    this.hockeyPadBlue.position.y = 1500;
+    this.hockeyPadRed.position.y = 100;
   }
 
   public render(): void {
