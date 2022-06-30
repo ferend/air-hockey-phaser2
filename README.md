@@ -1,13 +1,7 @@
 # Phaser.io CE 2.15.0, Howler.js 2.1.3, TypeScript and Webpack 4.43, play nice together.
-#### A bootstrap project to create games with Phaser.io, Howler.js, TypeScript and Webpack.
+#### Phaser 2 Air Hockey Game
 
 ## Features
-- Uses the latest Phaser CE 
-- Uses Howler (an awesome audio library) - can be easily removed if one does not use it
-- TypeScript linter that checks TypeScript code for readability, maintainability, and functionality errors
-- Webpack 4 ready
-- Built-in commands to easily deploy code your code (minify, uglify, comments removal, etc)
-- Other awesome stuff!
 
 # Setup
 To use this bootstrap you’ll need to install a few things before you have a working copy of the project.
@@ -68,16 +62,3 @@ Run:
 Run:
 
 ``` npm run check-types```
-
-## Credits
-Big thanks to this great repos:
-
-https://github.com/lean/phaser-es6-webpack/tree/typescript<br />
-https://github.com/eduardonunesp/phaser-typescript-webpack-boilerplate<br />
-https://github.com/heathkit/phaser-typescript-webpack-starter/tree/master/src/sprites
-
-Special thanks to:
-<a href="https://github.com/dimorphic/" target="_blank" title="dimorphic's Profile">dimorphic</a>
-
-<br />
-Made with <3 in Romania 
