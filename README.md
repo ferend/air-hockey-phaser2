@@ -1,5 +1,5 @@
-# Phaser.io CE 2.15.0, Howler.js 2.1.3, TypeScript and Webpack 4.43, play nice together.
-#### Phaser 2 Air Hockey Game
+# Phaser 2 Air Hockey Game
+#### Phaser.io CE 2.15.0, Howler.js 2.1.3, TypeScript and Webpack 4.43, play nice together.
 
 ## Features
 
